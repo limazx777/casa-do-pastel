@@ -711,7 +711,7 @@ function closeCheckoutModal() {
 }
 
 async function sendOrder() {
-    const phoneNumber = "5599982049556"; // SUBSTITUA pelo seu número (DDI + DDD + Número)
+    const phoneNumber = "5599984657611"; // SUBSTITUA pelo seu número (DDI + DDD + Número)
 
     // Coleta dados da UI
     const clientName = document.getElementById('client-name').value.trim();
