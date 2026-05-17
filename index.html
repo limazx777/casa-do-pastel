@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Pastel | O Rei do Sabor</title>
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>document.documentElement.classList.add('js-ready');</script><body>
+
+    <!-- Status Bar -->
+    <div id="store-status-banner" class="status-banner"></div>
+
+    <!-- Navegação -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo"><img src="./img/logo.png" alt="Casa do Pastel"></div>
+            <nav class="nav-links">
+                <button class="close-menu-btn" onclick="toggleMobileMenu()"><i data-lucide="x"></i></button>
+                <a href="#home">Início</a>
+                <a href="menu.html">Cardápio</a>
+                <a href="#local">O Local</a>
+                <a href="#avaliacoes">Avaliações</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg-animation"></div>
+        <div class="container hero-content">
+            <div class="hero-text scroll-reveal">
+                <h1>O melhor pastel da cidade na sua casa</h1>
+                <p>Delivery rápido e espaço confortável para você comer no local.</p>
+                <div class="hero-btns">
+                    <a href="menu.html" class="btn btn-primary">Ver Cardápio</a>
+                </div>
+            </div>
+            <div class="hero-image scroll-reveal">
+                <img src="./img/pastel_crocante.png" alt="Pastel Crocante" class="floating">
+            </div>
+        </div>
+        <div class="scroll-arrow scroll-reveal" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })">
+            <span class="scroll-text">Role para ver mais</span>
+            <i data-lucide="chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Cardápio Digital -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Destaques da Casa</h2>
+
+            <div id="product-grid" class="product-grid scroll-reveal">
+                <!-- Produtos inseridos via JS -->
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;" class="scroll-reveal">
+                <a href="menu.html" class="btn btn-secondary">Ver Cardápio Completo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Local -->
+    <section id="local" class="local-section">
+        <div class="container">
+            <div class="local-content">
+                <div class="local-text scroll-reveal">
+                    <h2>Venha viver a melhor experiência</h2>
+                    <p>Ambiente agradável, mesas confortáveis e o melhor pastel da região.</p>
+                    <div class="local-info">
+                        <span><i data-lucide="map-pin"></i> Rua Pablo Sales, 16 - Planalto</span>
+                        <span><i data-lucide="clock"></i> Ter a Sex: 14h às 22h30 | Sáb: 14h às 23h | Dom: 18h às 23h</span>
+                    </div>
+                </div>
+                <div class="local-gallery scroll-reveal">
+                    <img src="./img/local.png" alt="Nosso Ambiente">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section id="avaliacoes" class="reviews">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">O que nossos Clientes dizem sobre nós</h2>
+            <div class="reviews-grid scroll-reveal">
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"O pastel chega super crocante! O delivery é realmente muito rápido."</p>
+                    <strong>- Ricardo Souza</strong>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Melhor pastel de carne com queijo que já comi. Atendimento nota 10."</p>
+                    <strong>- Ana Julia</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrinho Lateral -->
+    <aside id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <h3>Seu Pedido</h3>
+            <button onclick="toggleCart()"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Itens via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="total-price">R$ 0,00</span>
+            </div>
+            <button id="finalize-button" class="btn btn-primary w-100" onclick="checkout()">Finalizar Pedido</button>
+        </div>
+    </aside>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo"><img src="./img/logo.png" alt="Casa do Pastel"></div>
+                    <p>Qualidade real em cada mordida.</p>
+                </div>
+                <div class="socials">
+                  <a href="https://www.instagram.com/casadopastel_lp/"><i data-lucide="instagram"></i></a>
+                  <a href="https://wa.link/j1grb3"><i data-lucide="message-circle"></i></a>
+                </div>
+            </div>
+            <hr>
+            <p class="copy">&copy; 2026 Casa do Pastel. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Detalhes do Produto -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div id="modal-body">
+                <!-- Conteúdo inserido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCheckoutModal()">&times;</button>
+            <h2 style="margin-bottom: 20px;">Finalizar Pedido</h2>
+            
+            <input type="text" placeholder="Seu Nome" id="client-name" style="margin-bottom: 10px;">
+            <input type="text" placeholder="Seu Telefone (WhatsApp)" id="client-phone" style="margin-bottom: 20px;">
+
+            <div class="delivery-options" style="margin-bottom: 20px;">
+                <label><input type="radio" name="order-type" value="delivery" checked> Delivery</label>
+                <label><input type="radio" name="order-type" value="retirada"> Retirada</label>
+            </div>
+            
+            <div id="address-section" class="address-section">
+                <select id="neighborhood-select">
+                    <option value="0" disabled selected>Selecione seu bairro...</option>
+                    <option value="5">Centro - R$ 5,00</option>
+                    <option value="8">Bairro Norte - R$ 8,00</option>
+                    <option value="12">Bairro Sul - R$ 12,00</option>
+                    <option value="15">Zona Rural - R$ 15,00</option>
+                </select>
+                <input type="text" placeholder="Rua" id="addr-street">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Número" id="addr-number" style="flex: 1;">
+                    <input type="text" placeholder="Complemento" id="addr-complement" style="flex: 2;">
+                </div>
+                <p>Taxa de entrega: <span id="delivery-fee">R$ 0,00</span></p>
+            </div>
+            
+            <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Forma de Pagamento</h3>
+            <div class="payment-options" style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <label><input type="radio" name="payment-method" value="pix" checked> Pix</label>
+                <label><input type="radio" name="payment-method" value="cartao"> Cartão</label>
+                <label><input type="radio" name="payment-method" value="dinheiro"> Dinheiro</label>
+            </div>
+
+            <div id="change-section" style="display: none; margin-bottom: 20px;">
+                <input type="text" placeholder="Troco para quanto?" id="change-input">
+            </div>
+            
+            <div class="cart-total" style="border-top: 1px solid var(--gray); padding-top: 15px; margin-bottom: 20px;">
+                <span>Total do Pedido:</span>
+                <span id="checkout-total-price">R$ 0,00</span>
+            </div>
+            
+            <p id="estimated-time" style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 10px;">Tempo médio de entrega: 30-50 min</p>
+            <button class="btn btn-primary w-100" onclick="sendOrder()">Confirmar e Enviar para WhatsApp</button>
+            <p class="status-sim" id="status-msg-checkout" style="text-align: center; margin-top: 15px;"></p>
+        </div>
+    </div>
+
+    <!-- Modal Upsell Bebidas -->
+    <div id="upsell-modal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <button class="close-modal" onclick="closeUpsellModal()">&times;</button>
+            <div style="margin-bottom: 20px;">
+                <i data-lucide="cup-soda" style="width: 60px; height: 60px; color: var(--primary); margin: 0 auto;"></i>
+            </div>
+            <h2 style="margin-bottom: 10px;">Gostaria de adicionar uma bebida?</h2>
+            <p style="margin-bottom: 30px; opacity: 0.8;">Um pastel crocante pede um refrigerante ou um suco bem gelado!</p>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeUpsellAndCheckout()">Não, obrigado</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="goToDrinks()">Ver Bebidas</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

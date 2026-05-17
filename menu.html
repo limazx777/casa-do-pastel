@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio | Casa do Pastel</title>
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Status Bar -->
+    <div id="store-status-banner" class="status-banner"></div>
+
+    <!-- Navegação -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo"><a href="index.html"><img src="./img/logo.png" alt="Casa do Pastel"></a></div>
+            <nav class="nav-links">
+                <button class="close-menu-btn" onclick="toggleMobileMenu()"><i data-lucide="x"></i></button>
+                <a href="index.html">Início</a>
+                <a href="menu.html" style="color: var(--primary);">Cardápio</a>
+                <a href="index.html#local">O Local</a>
+                <a href="index.html#avaliacoes">Avaliações</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cardápio Digital -->
+    <section id="menu" class="menu-section" style="padding-top: 120px;">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Nosso Cardápio Completo</h2>
+            
+            <div class="categories scroll-reveal">
+            </div>
+
+            <div id="product-grid" class="product-grid scroll-reveal">
+                <!-- Produtos inseridos via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrinho Lateral -->
+    <aside id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <h3>Seu Pedido</h3>
+            <button onclick="toggleCart()"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Itens via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="total-price">R$ 0,00</span>
+            </div>
+            <button id="finalize-button" class="btn btn-primary w-100" onclick="checkout()">Finalizar Pedido</button>
+        </div>
+    </aside>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo"><img src="./img/logo.png" alt="Casa do Pastel"></div>
+                    <p>Qualidade real em cada mordida.</p>
+                </div>
+                <div class="socials">
+                    <a href="https://www.instagram.com/casadopastel_lp/"><i data-lucide="instagram"></i></a>
+                    <a href="https://wa.link/j1grb3"><i data-lucide="message-circle"></i></a>
+                </div>
+            </div>
+            <hr>
+            <p class="copy">&copy; 2026 Casa do Pastel. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Detalhes do Produto -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div id="modal-body">
+                <!-- Conteúdo inserido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCheckoutModal()">&times;</button>
+            <h2 style="margin-bottom: 20px;">Finalizar Pedido</h2>
+            
+            <input type="text" placeholder="Seu Nome" id="client-name" style="margin-bottom: 10px;">
+            <input type="text" placeholder="Seu Telefone (WhatsApp)" id="client-phone" style="margin-bottom: 20px;">
+
+            <div class="delivery-options" style="margin-bottom: 20px;">
+                <label><input type="radio" name="order-type" value="delivery" checked> Delivery</label>
+                <label><input type="radio" name="order-type" value="retirada"> Retirada</label>
+            </div>
+            
+            <div id="address-section" class="address-section">
+                <select id="neighborhood-select">
+                    <option value="0" disabled selected>Selecione seu bairro...</option>
+                    <option value="5">Centro - R$ 5,00</option>
+                    <option value="8">Bairro Norte - R$ 8,00</option>
+                    <option value="12">Bairro Sul - R$ 12,00</option>
+                    <option value="15">Zona Rural - R$ 15,00</option>
+                </select>
+                <input type="text" placeholder="Rua" id="addr-street">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Número" id="addr-number" style="flex: 1;">
+                    <input type="text" placeholder="Complemento" id="addr-complement" style="flex: 2;">
+                </div>
+                <p>Taxa de entrega: <span id="delivery-fee">R$ 0,00</span></p>
+            </div>
+            
+            <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Forma de Pagamento</h3>
+            <div class="payment-options" style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <label><input type="radio" name="payment-method" value="pix" checked> Pix</label>
+                <label><input type="radio" name="payment-method" value="cartao"> Cartão</label>
+                <label><input type="radio" name="payment-method" value="dinheiro"> Dinheiro</label>
+            </div>
+
+            <div id="change-section" style="display: none; margin-bottom: 20px;">
+                <input type="text" placeholder="Troco para quanto?" id="change-input">
+            </div>
+            
+            <div class="cart-total" style="border-top: 1px solid var(--gray); padding-top: 15px; margin-bottom: 20px;">
+                <span>Total do Pedido:</span>
+                <span id="checkout-total-price">R$ 0,00</span>
+            </div>
+            
+            <p id="estimated-time" style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 10px;">Tempo médio de entrega: 30-50 min</p>
+            <button class="btn btn-primary w-100" onclick="sendOrder()">Confirmar e Enviar para WhatsApp</button>
+            <p class="status-sim" id="status-msg-checkout" style="text-align: center; margin-top: 15px;"></p>
+        </div>
+    </div>
+
+    <!-- Modal Upsell Bebidas -->
+    <div id="upsell-modal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <button class="close-modal" onclick="closeUpsellModal()">&times;</button>
+            <div style="margin-bottom: 20px;">
+                <i data-lucide="cup-soda" style="width: 60px; height: 60px; color: var(--primary); margin: 0 auto;"></i>
+            </div>
+            <h2 style="margin-bottom: 10px;">Gostaria de adicionar uma bebida?</h2>
+            <p style="margin-bottom: 30px; opacity: 0.8;">Um pastel crocante pede um refrigerante ou um suco bem gelado!</p>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeUpsellAndCheckout()">Não, obrigado</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="goToDrinks()">Ver Bebidas</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

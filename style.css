@@ -1,0 +1,762 @@
+:root {
+    --primary: #d62828;
+    --secondary: #ffcc00;
+    --white: #ffffff;
+    --dark: #1a1a1a;
+    --gray: #f4f4f4;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --radius: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    overflow-x: hidden; /* Impede o scroll lateral residual */
+    width: 100%;
+    scroll-behavior: smooth;
+}
+
+img {
+    max-width: 100%; /* Garante que nenhuma imagem force a largura do container */
+    height: auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px; /* Margens laterais fixas para telas grandes */
+}
+
+/* Navbar */
+.navbar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    position: fixed;
+    width: 100%;
+    z-index: 3000;
+    transition: top 0.3s;
+}
+
+/* Banner de Status Aberto/Fechado */
+.status-banner {
+    height: 40px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+    transition: background 0.3s;
+}
+.status-banner.open { background: #27ae60; }
+.status-banner.closed { background: var(--primary); }
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.cart-btn {
+    background: none;
+    color: var(--primary);
+    border: none;
+    padding: 0;
+    width: 40px; /* Tamanho fixo para padronização */
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-btn i {
+    width: 24px;
+    height: 24px;
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: 2px; /* Ajustado para não "vazar" muito para fora do botão */
+    background: var(--secondary);
+    color: var(--dark);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* Reset e Estilização Moderna para Botões de Menu e Fechar */
+.mobile-menu-btn,
+.close-menu-btn {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0;
+    width: 40px; /* Mesma largura do carrinho */
+    height: 40px;
+    cursor: pointer;
+    color: #e3262e !important; /* Vermelho Vibrante */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Compensação óptica para o menu hambúrguer */
+.mobile-menu-btn i {
+    transform: translateY(1px);
+}
+
+/* Interação: Leve escala e mudança de opacidade */
+.mobile-menu-btn:hover,
+.close-menu-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Melhoria no scroll das categorias mobile */
+.categories::-webkit-scrollbar {
+    display: none;
+}
+.categories {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Hero Section */
+.hero {
+    padding: 140px 0 80px;
+    background-color: var(--white);
+    background: linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.75)), 
+                url('./img/fundo.jfif') no-repeat center center/cover;
+    position: relative;
+}
+
+/* Degradê na divisão inferior para transição suave */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; /* Avança 1px para sobrepor a divisão e eliminar a linha */
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+    pointer-events: none;
+    z-index: 5;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero-text p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
+
+.btn {
+    padding: 15px 30px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    transition: 0.3s;
+    cursor: pointer; 
+    border: none;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: #b11d1d; transform: scale(1.05); }
+
+.btn-secondary { background: var(--secondary); color: var(--dark); }
+
+.w-100 {
+    width: 100%;
+    display: block;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.floating {
+    width: 100%;
+    border-radius: var(--radius);
+    animation: float 6s ease-in-out infinite;
+    box-shadow: var(--shadow);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Cardápio */
+.scroll-arrow {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--primary);
+    cursor: pointer;
+    z-index: 10;
+    animation: arrowPulse 2s infinite;
+    display: flex; /* Mantém o flex para alinhar o texto e o ícone */
+    flex-direction: column; /* Empilha o texto e o ícone */
+    gap: 5px; /* Espaçamento entre o texto e o ícone */
+    flex-direction: column;
+    align-items: center;
+}
+
+.scroll-arrow .scroll-text {
+    font-size: 0.8rem; /* Tamanho discreto */
+    color: #888; /* Cor suave */
+    font-weight: 500;
+}
+
+.scroll-arrow i {
+    width: 35px;
+    height: 35px;
+}
+
+@keyframes arrowPulse {
+    0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    50% { transform: translateX(-50%) translateY(10px); opacity: 0.3; }
+    100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+.menu-section { padding: 80px 0; }
+.section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
+
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.cat-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2px solid var(--gray);
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cat-btn.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.product-card:hover { transform: translateY(-10px); }
+
+.product-card img { width: 100%; height: 200px; object-fit: cover; }
+
+.product-info { padding: 20px; }
+.product-info h3 { margin-bottom: 10px; }
+.product-info p { font-size: 0.9rem; color: #666; height: 40px; }
+.price { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 15px 0; display: block; }
+
+/* Carrinho Sidebar */
+.side-cart {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.side-cart.open { right: 0; }
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 15px;
+}
+
+.cart-items { flex: 1; overflow-y: auto; padding: 20px 0; }
+
+.cart-footer { border-top: 1px solid var(--gray); padding-top: 20px; }
+
+.delivery-options { margin-bottom: 15px; }
+
+/* Seção Local */
+.local-section {
+    padding: 80px 0;
+    background: var(--gray);
+}
+
+.local-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.local-text { flex: 1; }
+.local-gallery { flex: 1; }
+.local-gallery img {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.local-info {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.local-info span {
+    display: flex;
+    align-items: flex-start; /* Alinha pelo topo para precisão em textos de múltiplas linhas */
+    gap: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.local-info span i {
+    color: var(--primary);
+    margin-top: 4px; /* Ajuste óptico para centralizar o ícone com a primeira linha de texto */
+    flex-shrink: 0; /* Impede que o ícone amasse em telas menores */
+}
+
+/* Avaliações */
+.reviews { padding: 80px 0; }
+.reviews-grid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.review-card {
+    background: var(--gray);
+    padding: 30px;
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+.stars {
+    color: var(--secondary);
+    margin-bottom: 15px;
+}
+
+/* Footer */
+.footer {
+    padding: 60px 0 30px;
+    background: var(--dark);
+    color: var(--white);
+}
+
+.footer-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.footer hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+}
+
+.copy {
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.socials {
+    display: flex;
+    gap: 15px;
+}
+
+.socials a { color: var(--white); }
+
+/* Modal de Produto */
+.modal {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    overflow-y: hidden; /* Trava o fundo */
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: auto;
+    padding: 30px;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 550px;
+    max-height: 90vh; /* Não deixa o modal sumir da tela */
+    overflow-y: auto; /* Permite rolar dentro do modal */
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease-out;
+    scrollbar-width: thin;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 32px;
+    color: #999;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-product-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.upgrade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.mini-btn {
+    border: none;
+    background: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.mini-btn:hover { background: #b11d1d; }
+
+.upgrade-qtd { font-weight: 600; min-width: 15px; text-align: center; }
+
+/* Modernização dos Traços dos Ícones (Lucide) */
+.mobile-menu-btn i, 
+.close-menu-btn i {
+    stroke-width: 1.8px; /* Aumentado levemente para equilibrar o peso visual com o carrinho */
+}
+
+textarea, input[type="text"], select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+/* --- Layout para Tablet --- */
+@media (min-width: 768px) {
+    .hero-text h1 {
+        font-size: 3rem; /* Fonte equilibrada para Tablet */
+    }
+
+    .hero-text p {
+        font-size: 1.3rem;
+        max-width: 600px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .section-title {
+        font-size: 2.8rem;
+    }
+}
+
+/* --- Layout para Desktop --- */
+@media (min-width: 1024px) {
+    .hero-content {
+        flex-direction: row; /* Texto e Imagem lado a lado */
+        text-align: left;
+        justify-content: space-between;
+        gap: 60px;
+    }
+
+    .hero-text {
+        flex: 1.2;
+    }
+
+    .hero-image {
+        display: block !important; /* Garante que a imagem apareça no Desktop */
+        flex: 1;
+    }
+
+    /* Esconde botões de menu mobile no Desktop */
+    .mobile-menu-btn,
+    .close-menu-btn {
+        display: none !important;
+    }
+
+    /* Garante que os links apareçam horizontalmente */
+    .nav-links {
+        position: static !important;
+        display: flex !important;
+        flex-direction: row !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .hero-btns {
+        justify-content: flex-start;
+    }
+
+    .hero-text h1 {
+        font-size: 3.8rem; /* Destaque no Desktop */
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas para Desktop (melhor leitura) */
+    }
+
+    .section-title {
+        font-size: 3.2rem;
+    }
+
+    .local-content {
+        flex-direction: row;
+        text-align: left;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .hero-text h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-content {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 100svh;
+        display: flex;
+        align-items: center; /* Volta a centralizar verticalmente */
+        padding: 80px 20px; /* Padding equilibrado para centralização */
+    }
+    .hero-content {
+        flex-direction: column; 
+        text-align: center;
+        justify-content: center;
+    }
+    .hero-image { display: none; }
+    .hero-btns { justify-content: center; }
+    .hero-text h1 { font-size: 2.5rem; }
+    .logo img { height: 60px; }
+    .navbar { height: 70px; }
+    
+    .categories {
+        justify-content: flex-start;
+        overflow-x: auto; /* Permite scroll lateral no mobile */
+        flex-wrap: nowrap;
+        padding-bottom: 15px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .product-grid {
+        grid-template-columns: 1fr; /* Força 1 coluna em telas muito pequenas para legibilidade */
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--white);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        flex-direction: column;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2500;
+        display: flex;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        margin: 15px 0;
+        font-size: 1.5rem;
+    }
+
+    .close-menu-btn {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2.5rem;
+    }
+
+    .mobile-menu-btn { display: block; }
+    .side-cart { width: 100%; right: -100%; }
+
+    .local-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-grid {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .modal-content {
+        width: 100%;
+        padding: 20px;
+        border-radius: 20px 20px 0 0;
+        position: fixed;
+        bottom: 0;
+        animation: slideUpMobile 0.4s ease-out;
+    }
+}
+
+@keyframes slideUpMobile { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* Classe para travar o scroll (Fix para iOS e Desktop Jump) */
+html.no-scroll,
+body.no-scroll {
+    overflow: hidden !important;
+    height: 100% !important;
+    scrollbar-gutter: stable; /* Evita o pulo do layout no desktop */
+}
+
+/* Animação Scroll */
+.scroll-reveal {
+    opacity: 1; /* Valor padrão 1 para garantir visibilidade se o JS demorar */
+    transform: translateY(30px);
+    transition: 0.8s ease-out;
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Se o JS estiver rodando, aí sim ocultamos para animar */
+html.js-ready .scroll-reveal:not(.visible) {
+    opacity: 0;
+}
+
+/* Ajuste de layout quando o banner está ativo */
+body.with-banner .navbar { top: 40px; }
+body.with-banner .hero { padding-top: 180px; }
+body.with-banner .menu-section { padding-top: 160px; }
+
+@media (max-width: 768px) {
+    body.with-banner .hero { padding-top: 120px; }
+}
