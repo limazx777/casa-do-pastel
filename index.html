@@ -172,13 +172,14 @@
             </div>
             
             <div id="address-section" class="address-section">
-                <select id="neighborhood-select">
-                    <option value="0" disabled selected>Selecione seu bairro...</option>
-                    <option value="5">Centro - R$ 5,00</option>
-                    <option value="8">Bairro Norte - R$ 8,00</option>
-                    <option value="12">Bairro Sul - R$ 12,00</option>
-                    <option value="15">Zona Rural - R$ 15,00</option>
-                </select>
+                <div class="custom-select-container" id="neighborhood-custom-select">
+                    <div class="custom-select-trigger" onclick="toggleNeighborhoodSelect()">
+                        <span id="selected-neighborhood-text">Selecione seu bairro...</span>
+                        <i data-lucide="chevron-down" class="select-arrow"></i>
+                    </div>
+                    <div class="custom-options-container" id="neighborhood-options-list" style="display: none;"></div>
+                    <input type="hidden" id="neighborhood-value" value="0">
+                </div>
                 <input type="text" placeholder="Rua" id="addr-street">
                 <div style="display: flex; gap: 10px;">
                     <input type="text" placeholder="Número" id="addr-number" style="flex: 1;">
