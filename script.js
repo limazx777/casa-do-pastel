@@ -751,23 +751,35 @@ async function sendOrder() {
     const total = document.getElementById('checkout-total-price').innerText;
     const statusMsg = document.getElementById('status-msg-checkout');
 
-    // Salvar Pedido no Firebase
-    const dadosPedidoFirebase = {
-        cliente: { nome: clientName, telefone: clientPhone },
-        itens: cart,
+    const feeValue = orderType === 'delivery' ? (parseFloat(neighborhoodValue.value) || 0) : 0;
+    const neighborhoodName = orderType === 'delivery' ? document.getElementById('selected-neighborhood-text').innerText : 'Retirada';
+
+    // 1. Array de itens mapeado corretamente (essencial para listagens e relatórios de "Mais Vendidos")
+    const itens = cart.map(item => ({
+        id: item.id,
+        name: item.name || item.nome,
+        price: parseFloat(item.price || item.preco || 0),
+        qtd: item.qtd,
+        obs: item.obs || "",
+        complementos: item.complementos || [],
+    }));
+
+    // 2. Montagem do pedidoData limpo, sem poluir a raiz com ...cart[0]
+    const pedidoData = {
+        nomeCliente: clientName,
+        telefone: clientPhone,
+        itens: itens, // Agora o admin consegue iterar sobre pedido.itens
+        formaPagamento: paymentMethod, // Valor capturado do input radio
+        taxaEntrega: feeValue, // Salvo como Number para cálculos no Admin
+        bairro: neighborhoodName,
+        total: parseFloat(total.replace('R$ ', '').replace(',', '.')),
         tipo: orderType,
-        endereco: orderType === 'delivery' ? { 
-            street, 
-            number, 
-            complement, 
-            neighborhood: document.getElementById('selected-neighborhood-text').innerText 
-        } : 'Retirada',
-        pagamento: { metodo: paymentMethod, troco: changeValue },
-        total: parseFloat(total.replace('R$ ', '').replace(',', '.'))
+        detalhesEndereco: orderType === 'delivery' ? { street, number, complement } : null,
+        troco: paymentMethod === 'dinheiro' ? changeValue : null
     };
 
     statusMsg.innerText = "⏳ Registrando pedido...";
-    await enviarPedidoParaFirebase(dadosPedidoFirebase);
+    await enviarPedidoParaFirebase(pedidoData);
 
     // Formatação da mensagem para o WhatsApp
     let message = `📍 *NOVO PEDIDO - CASA DO PASTEL*\n`;
@@ -816,10 +828,7 @@ async function sendOrder() {
     if (paymentMethod === 'dinheiro' && changeValue) {
         message += `💵 *Troco para:* R$ ${changeValue}\n`;
     }
-    if (orderType === 'delivery') {
-        const feeValue = parseFloat(document.getElementById('neighborhood-value').value) || 0;
-        message += `Taxa de Entrega: R$ ${feeValue.toFixed(2)}\n`;
-    }
+    if (orderType === 'delivery') message += `Taxa de Entrega: R$ ${feeValue.toFixed(2)}\n`;
     message += `💵 *TOTAL: ${total}*`;
 
     // Codifica a mensagem para URL
