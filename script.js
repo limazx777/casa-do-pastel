@@ -284,7 +284,7 @@ function checkStoreStatus() {
     let isOpen = false;
 
     if (day >= 2 && day <= 5) { // Terça a Sexta: 14:00 - 22:30
-        isOpen = (time >= 14 && time < 22.5);
+        isOpen = (time >= 0 && time < 22.5);
     } else if (day === 6) { // Sábado: 14:00 - 23:00
         isOpen = (time >= 14 && time < 23);
     } else if (day === 0) { // Domingo: 18:00 - 23:00
@@ -767,7 +767,24 @@ async function sendOrder() {
     message += `📝 *ITENS:*\n\n`;
     
     cart.forEach(item => {
-        message += `${item.qtd}x ${item.nome}`;
+        const cat = (item.category || "").toLowerCase();
+        let tipo = "";
+
+        // Definição dos tipos com base na categoria
+        const categoriasPastel = ['carne de sol', 'frango', 'queijo', 'bauru', 'portuguesa', 'sabores especiais'];
+
+        if (categoriasPastel.includes(cat)) {
+            tipo = "Pastel ";
+        } else if (cat === 'massas') {
+            tipo = "Panqueca ";
+        } else if (cat === 'macarronadas') {
+            tipo = "Macarronada ";
+        } else if (cat !== "") {
+            // Para outras categorias, tentamos singularizar o nome (ex: Bebidas -> Bebida)
+            tipo = item.category.endsWith('s') ? item.category.slice(0, -1) + " " : item.category + " ";
+        }
+
+        message += `${item.qtd}x ${tipo}${item.name || item.nome}`;
         if(item.complementos && item.complementos.length > 0) {
             message += ` (Turbinado: ${item.complementos.map(c => `${c.qtd}x ${c.nome}`).join(', ')})`;
         }
