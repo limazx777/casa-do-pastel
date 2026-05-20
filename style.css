@@ -680,7 +680,7 @@ img {
     font-weight: 700;
 }
 
-textarea, input[type="text"] {
+textarea, input[type="text"], input[type="tel"] {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
@@ -859,6 +859,13 @@ textarea, input[type="text"] {
         position: fixed;
         bottom: 0;
         animation: slideUpMobile 0.4s ease-out;
+    }
+
+    /* Previne o zoom automático indesejado no iOS Safari ao focar nos campos */
+    textarea, 
+    input[type="text"], 
+    input[type="tel"] {
+        font-size: 16px;
     }
 }
 
