@@ -138,20 +138,24 @@ function buscarConfiguracoes() {
     // Busca a coleção de Bairros
     const bairrosCollectionRef = collection(db, "bairros");
     onSnapshot(bairrosCollectionRef, (querySnapshot) => {
-        const selectBairro = document.getElementById("neighborhood-select");
-        if (selectBairro) {
-            selectBairro.innerHTML = '<option value="">Selecione o bairro</option>';
+        const optionsList = document.getElementById("neighborhood-options-list");
+        if (optionsList) {
+            optionsList.innerHTML = '';
             
             querySnapshot.forEach((doc) => {
                 const dadosBairro = doc.data();
                 if (dadosBairro && dadosBairro.nome) {
-                    const option = document.createElement("option");
-                    option.value = dadosBairro.taxa;
-                    option.textContent = `${dadosBairro.nome} - R$ ${parseFloat(dadosBairro.taxa).toFixed(2)}`;
-                    selectBairro.appendChild(option);
+                    const div = document.createElement("div");
+                    div.className = "custom-option";
+                    div.innerHTML = `
+                        <span>${dadosBairro.nome}</span>
+                        <small>R$ ${parseFloat(dadosBairro.taxa).toFixed(2)}</small>
+                    `;
+                    div.onclick = () => selectNeighborhood(dadosBairro.nome, dadosBairro.taxa);
+                    optionsList.appendChild(div);
                 }
             });
-            console.log("Bairros da nova coleção carregados com sucesso!");
+            console.log("Grid de bairros renderizado.");
         }
     }, (error) => {
         console.error("Erro ao carregar coleção de bairros:", error);
@@ -605,11 +609,11 @@ function updateCartUI() {
     // Lógica de Taxa de Entrega
     const orderTypeInput = document.querySelector('input[name="order-type"]:checked');
     const orderType = orderTypeInput ? orderTypeInput.value : 'delivery';
-    const neighborhoodSelect = document.getElementById('neighborhood-select');
+    const neighborhoodValue = document.getElementById('neighborhood-value');
     let deliveryFee = 0;
 
-    if (orderType === 'delivery' && neighborhoodSelect) {
-        deliveryFee = parseFloat(neighborhoodSelect.value) || 0;
+    if (orderType === 'delivery' && neighborhoodValue) {
+        deliveryFee = parseFloat(neighborhoodValue.value) || 0;
     }
 
     const deliveryFeeElement = document.getElementById('delivery-fee');
@@ -720,7 +724,7 @@ async function sendOrder() {
     const street = document.getElementById('addr-street').value.trim();
     const number = document.getElementById('addr-number').value.trim();
     const complement = document.getElementById('addr-complement').value.trim();
-    const neighborhoodSelect = document.getElementById('neighborhood-select');
+    const neighborhoodValue = document.getElementById('neighborhood-value');
     const paymentMethodInput = document.querySelector('input[name="payment-method"]:checked');
     const paymentMethod = paymentMethodInput ? paymentMethodInput.value : 'pix';
     const changeValue = document.getElementById('change-input').value.trim();
@@ -732,7 +736,8 @@ async function sendOrder() {
 
     // Validação de endereço para delivery
     if (orderType === 'delivery') {
-        if (!neighborhoodSelect.value || neighborhoodSelect.value === "0") {
+        const val = neighborhoodValue.value;
+        if (!val || val === "0") {
             return alert("Por favor, selecione seu bairro!");
         }
         if (!street || !number || !complement) {
@@ -751,7 +756,12 @@ async function sendOrder() {
         cliente: { nome: clientName, telefone: clientPhone },
         itens: cart,
         tipo: orderType,
-        endereco: orderType === 'delivery' ? { street, number, complement, neighborhood: neighborhoodSelect.options[neighborhoodSelect.selectedIndex].text } : 'Retirada',
+        endereco: orderType === 'delivery' ? { 
+            street, 
+            number, 
+            complement, 
+            neighborhood: document.getElementById('selected-neighborhood-text').innerText 
+        } : 'Retirada',
         pagamento: { metodo: paymentMethod, troco: changeValue },
         total: parseFloat(total.replace('R$ ', '').replace(',', '.'))
     };
@@ -793,15 +803,11 @@ async function sendOrder() {
     });
 
     if (orderType === 'delivery') {
-        const neighborhoodOption = neighborhoodSelect.options[neighborhoodSelect.selectedIndex];
-        const neighborhoodName = neighborhoodOption.text.split(' - ')[0];
-        const mapQuery = encodeURIComponent(`${street}, ${number}, ${neighborhoodName}`);
-        const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+        const neighborhoodName = document.getElementById('selected-neighborhood-text').innerText;
 
         message += `🏠 *ENTREGA:*\n`;
         message += `${street}, ${number} - ${neighborhoodName}\n`;
-        message += `Ref: ${complement}\n`;
-        message += `${mapLink}\n\n`;
+        message += `Ref: ${complement}\n\n`;
     } else {
         message += `🏪 *RETIRADA NO LOCAL*\n\n`;
     }
@@ -811,7 +817,7 @@ async function sendOrder() {
         message += `💵 *Troco para:* R$ ${changeValue}\n`;
     }
     if (orderType === 'delivery') {
-        const feeValue = parseFloat(neighborhoodSelect.value) || 0;
+        const feeValue = parseFloat(document.getElementById('neighborhood-value').value) || 0;
         message += `Taxa de Entrega: R$ ${feeValue.toFixed(2)}\n`;
     }
     message += `💵 *TOTAL: ${total}*`;
@@ -834,6 +840,30 @@ async function sendOrder() {
         setTimeout(closeCheckoutModal, 2000);
     }, 1000);
 }
+
+// --- Funções Custom Select ---
+function toggleNeighborhoodSelect() {
+    const container = document.getElementById('neighborhood-custom-select');
+    const options = document.getElementById('neighborhood-options-list');
+    const isOpen = container.classList.toggle('open');
+    options.style.display = isOpen ? 'grid' : 'none';
+}
+
+function selectNeighborhood(nome, taxa) {
+    document.getElementById('selected-neighborhood-text').innerText = nome;
+    document.getElementById('neighborhood-value').value = taxa;
+    toggleNeighborhoodSelect();
+    updateCartUI();
+}
+
+// Fechar ao clicar fora
+document.addEventListener('click', (e) => {
+    const container = document.getElementById('neighborhood-custom-select');
+    if (container && !container.contains(e.target)) {
+        container.classList.remove('open');
+        document.getElementById('neighborhood-options-list').style.display = 'none';
+    }
+});
 
 // Animação de Scroll
 function setupScrollReveal() {
@@ -862,3 +892,5 @@ window.closeCheckoutModal = closeCheckoutModal;
 window.closeUpsellModal = closeUpsellModal;
 window.closeUpsellAndCheckout = closeUpsellAndCheckout;
 window.goToDrinks = goToDrinks;
+window.toggleNeighborhoodSelect = toggleNeighborhoodSelect;
+window.selectNeighborhood = selectNeighborhood;
