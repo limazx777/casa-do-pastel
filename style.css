@@ -1,947 +1,234 @@
-:root {
-    --primary: #d62828;
-    --secondary: #ffcc00;
-    --white: #ffffff;
-    --dark: #1a1a1a;
-    --gray: #f4f4f4;
-    --shadow: 0 4px 15px rgba(0,0,0,0.1);
-    --radius: 16px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--dark);
-    background: var(--white);
-    overflow-x: hidden; /* Impede o scroll lateral residual */
-    width: 100%;
-    scroll-behavior: smooth;
-}
-
-img {
-    max-width: 100%; /* Garante que nenhuma imagem force a largura do container */
-    height: auto;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 25px; /* Margens laterais fixas para telas grandes */
-}
-
-/* Navbar */
-.navbar {
-    height: 80px;
-    display: flex;
-    align-items: center;
-    background: var(--white);
-    box-shadow: var(--shadow);
-    position: fixed;
-    width: 100%;
-    z-index: 3000;
-    transition: top 0.3s;
-}
-
-/* Banner de Status Aberto/Fechado */
-.status-banner {
-    height: 40px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: white;
-    transition: background 0.3s;
-}
-.status-banner.open { background: #27ae60; }
-.status-banner.closed { background: var(--primary); }
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo img {
-    height: 70px;
-    width: auto;
-}
-
-.nav-links a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: var(--dark);
-    font-weight: 600;
-}
-
-.cart-btn {
-    background: none;
-    color: var(--primary);
-    border: none;
-    padding: 0;
-    width: 40px; /* Tamanho fixo para padronização */
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cart-btn i {
-    width: 24px;
-    height: 24px;
-}
-
-#cart-count {
-    position: absolute;
-    top: -5px;
-    right: 2px; /* Ajustado para não "vazar" muito para fora do botão */
-    background: var(--secondary);
-    color: var(--dark);
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 50%;
-    font-weight: bold;
-}
-
-/* Reset e Estilização Moderna para Botões de Menu e Fechar */
-.mobile-menu-btn,
-.close-menu-btn {
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    padding: 0;
-    width: 40px; /* Mesma largura do carrinho */
-    height: 40px;
-    cursor: pointer;
-    color: #e3262e !important; /* Vermelho Vibrante */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Compensação óptica para o menu hambúrguer */
-.mobile-menu-btn i {
-    transform: translateY(1px);
-}
-
-/* Interação: Leve escala e mudança de opacidade */
-.mobile-menu-btn:hover,
-.close-menu-btn:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
-}
-
-/* Melhoria no scroll das categorias mobile */
-.categories::-webkit-scrollbar {
-    display: none;
-}
-.categories {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-/* Hero Section */
-.hero {
-    padding: 140px 0 80px;
-    background-color: var(--white);
-    background: linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.75)), 
-                url('./img/fundo.jfif') no-repeat center center/cover;
-    position: relative;
-}
-
-/* Degradê na divisão inferior para transição suave */
-.hero::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; /* Avança 1px para sobrepor a divisão e eliminar a linha */
-    left: 0;
-    width: 100%;
-    height: 150px;
-    background: linear-gradient(to bottom, transparent, var(--white));
-    pointer-events: none;
-    z-index: 5;
-}
-
-.hero-content {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.hero-text h1 {
-    font-size: 3.5rem;
-    line-height: 1.2;
-    margin-bottom: 20px;
-}
-
-.hero-text p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
-
-.btn {
-    padding: 15px 30px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 700;
-    display: inline-block;
-    transition: 0.3s;
-    cursor: pointer; 
-    border: none;
-}
-
-.btn-primary { background: var(--primary); color: white; }
-.btn-primary:hover { background: #b11d1d; transform: scale(1.05); }
-
-.btn-secondary { background: var(--secondary); color: var(--dark); }
-
-.w-100 {
-    width: 100%;
-    display: block;
-}
-
-.hero-btns {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-
-.floating {
-    width: 100%;
-    border-radius: var(--radius);
-    animation: float 6s ease-in-out infinite;
-    box-shadow: var(--shadow);
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-/* Cardápio */
-.scroll-arrow {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--primary);
-    cursor: pointer;
-    z-index: 10;
-    animation: arrowPulse 2s infinite;
-    display: flex; /* Mantém o flex para alinhar o texto e o ícone */
-    flex-direction: column; /* Empilha o texto e o ícone */
-    gap: 5px; /* Espaçamento entre o texto e o ícone */
-    flex-direction: column;
-    align-items: center;
-}
-
-.scroll-arrow .scroll-text {
-    font-size: 0.8rem; /* Tamanho discreto */
-    color: #888; /* Cor suave */
-    font-weight: 500;
-}
-
-.scroll-arrow i {
-    width: 35px;
-    height: 35px;
-}
-
-@keyframes arrowPulse {
-    0% { transform: translateX(-50%) translateY(0); opacity: 1; }
-    50% { transform: translateX(-50%) translateY(10px); opacity: 0.3; }
-    100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-
-.menu-section { padding: 80px 0; }
-.section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
-
-.categories {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-}
-
-.cat-btn {
-    padding: 10px 20px;
-    border-radius: 50px;
-    border: 2px solid var(--gray);
-    background: white;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.cat-btn.active {
-    background: var(--secondary);
-    border-color: var(--secondary);
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.product-card {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.product-card:hover { transform: translateY(-10px); }
-
-.product-card img { width: 100%; height: 200px; object-fit: cover; }
-
-.product-info { padding: 20px; }
-.product-info h3 { margin-bottom: 10px; }
-.product-info p { font-size: 0.9rem; color: #666; height: 40px; }
-.price { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 15px 0; display: block; }
-
-/* Carrinho Sidebar */
-.side-cart {
-    position: fixed;
-    right: -400px;
-    top: 0;
-    width: 400px;
-    height: 100%;
-    background: white;
-    z-index: 1000;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.side-cart.open { right: 0; }
-
-.cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--gray);
-    padding-bottom: 15px;
-}
-
-.cart-items { flex: 1; overflow-y: auto; padding: 20px 0; }
-
-.cart-footer { border-top: 1px solid var(--gray); padding-top: 20px; }
-
-/* Estilização Customizada de Opções (Radio Cards) */
-.delivery-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.payment-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.delivery-options label, 
-.payment-options label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 14px 5px;
-    background: #ffffff;
-    border: 2px solid #f0f0f0;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 600;
-    color: var(--dark);
-    font-size: 0.85rem;
-    position: relative;
-    user-select: none;
-}
-
-.delivery-options input[type="radio"],
-.payment-options input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
-    display: none; /* Esconde o input nativo */
-}
-
-/* Estado Selecionado: Card com borda vermelha e fundo sutil */
-.delivery-options label:has(input:checked),
-.payment-options label:has(input:checked) {
-    border-color: #e3262e;
-    background-color: rgba(227, 38, 46, 0.05);
-    color: #e3262e;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(227, 38, 46, 0.1);
-}
-
-/* Seção Local */
-.local-section {
-    padding: 80px 0;
-    background: var(--gray);
-}
-
-.local-content {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.local-text { flex: 1; }
-.local-gallery { flex: 1; }
-.local-gallery img {
-    width: 100%;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
-
-.local-info {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.local-info span {
-    display: flex;
-    align-items: flex-start; /* Alinha pelo topo para precisão em textos de múltiplas linhas */
-    gap: 12px;
-    font-weight: 500;
-    line-height: 1.5;
-}
-
-.local-info span i {
-    color: var(--primary);
-    margin-top: 4px; /* Ajuste óptico para centralizar o ícone com a primeira linha de texto */
-    flex-shrink: 0; /* Impede que o ícone amasse em telas menores */
-}
-
-/* Avaliações */
-.reviews { padding: 80px 0; }
-.reviews-grid {
-    display: flex;
-    flex-wrap: wrap;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.review-card {
-    background: var(--gray);
-    padding: 30px;
-    border-radius: var(--radius);
-    text-align: center;
-}
-
-.stars {
-    color: var(--secondary);
-    margin-bottom: 15px;
-}
-
-/* Footer */
-.footer {
-    padding: 60px 0 30px;
-    background: var(--dark);
-    color: var(--white);
-}
-
-.footer-grid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.footer hr {
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 20px;
-}
-
-.copy {
-    text-align: center;
-    font-size: 0.9rem;
-    opacity: 0.6;
-}
-
-.socials {
-    display: flex;
-    gap: 15px;
-}
-
-.socials a { color: var(--white); }
-
-/* Modal de Produto */
-.modal {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    backdrop-filter: blur(3px);
-    overflow-y: hidden; /* Trava o fundo */
-    padding: 20px;
-}
-
-.modal-content {
-    background-color: var(--white);
-    margin: auto;
-    padding: 30px;
-    border-radius: var(--radius);
-    width: 90%;
-    max-width: 550px;
-    max-height: 90vh; /* Não deixa o modal sumir da tela */
-    overflow-y: auto; /* Permite rolar dentro do modal */
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: slideUp 0.3s ease-out;
-    scrollbar-width: thin;
-}
-
-@keyframes slideUp {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.close-modal {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    font-size: 32px;
-    color: #999;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.modal-product-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.upgrade-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--gray);
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-
-.mini-btn {
-    border: none;
-    background: var(--primary);
-    color: white;
-    width: 28px;
-    height: 28px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-.mini-btn:hover { background: #b11d1d; }
-
-.upgrade-qtd { font-weight: 600; min-width: 15px; text-align: center; }
-
-/* Modernização dos Traços dos Ícones (Lucide) */
-.mobile-menu-btn i, 
-.close-menu-btn i {
-    stroke-width: 1.8px; /* Aumentado levemente para equilibrar o peso visual com o carrinho */
-}
-
-/* Custom Select Bairros - Grid Layout */
-.custom-select-container {
-    position: relative;
-    width: 100%;
-    margin-bottom: 15px;
-    user-select: none;
-}
-
-.custom-select-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.custom-select-container.open .custom-select-trigger {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(214, 40, 40, 0.1);
-}
-
-.select-arrow {
-    color: var(--primary);
-    transition: transform 0.3s ease;
-}
-
-.custom-select-container.open .select-arrow {
-    transform: rotate(180deg);
-}
-
-.custom-options-container {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    z-index: 100;
-    max-height: 300px;
-    overflow-y: auto;
-    display: none;
-    padding: 12px;
-    border: 1px solid #f0f0f0;
-    display: grid; /* Ativa o Grid */
-    grid-template-columns: repeat(2, 1fr); /* 2 Colunas iguais */
-    gap: 10px;
-    animation: slideUp 0.2s ease-out;
-}
-
-/* Estilo para garantir que o mapa não quebre o modal */
-#map-modal .modal-content {
-    overflow: visible;
-}
-
-.custom-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 12px 8px;
-    background: #f9f9f9;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.custom-option:hover {
-    background: rgba(214, 40, 40, 0.05);
-    border-color: var(--primary);
-}
-
-.custom-option span {
-    font-size: 0.85rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 4px;
-    color: var(--dark);
-}
-
-.custom-option small {
-    font-size: 0.75rem;
-    color: var(--primary);
-    font-weight: 700;
-}
-
-textarea, input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-}
-
-/* --- Layout para Tablet --- */
-@media (min-width: 768px) {
-    .hero-text h1 {
-        font-size: 3rem; /* Fonte equilibrada para Tablet */
-    }
-
-    .hero-text p {
-        font-size: 1.3rem;
-        max-width: 600px;
-    }
-
-    .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-
-    .section-title {
-        font-size: 2.8rem;
-    }
-}
-
-/* --- Layout para Desktop --- */
-@media (min-width: 1024px) {
-    .hero-content {
-        flex-direction: row; /* Texto e Imagem lado a lado */
-        text-align: left;
-        justify-content: space-between;
-        gap: 60px;
-    }
-
-    .hero-text {
-        flex: 1.2;
-    }
-
-    .hero-image {
-        display: block !important; /* Garante que a imagem apareça no Desktop */
-        flex: 1;
-    }
-
-    /* Esconde botões de menu mobile no Desktop */
-    .mobile-menu-btn,
-    .close-menu-btn {
-        display: none !important;
-    }
-
-    /* Garante que os links apareçam horizontalmente */
-    .nav-links {
-        position: static !important;
-        display: flex !important;
-        flex-direction: row !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .hero-btns {
-        justify-content: flex-start;
-    }
-
-    .hero-text h1 {
-        font-size: 3.8rem; /* Destaque no Desktop */
-    }
-
-    .product-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 colunas para Desktop (melhor leitura) */
-    }
-
-    .section-title {
-        font-size: 3.2rem;
-    }
-
-    .local-content {
-        flex-direction: row;
-        text-align: left;
-    }
-}
-
-/* Responsividade */
-@media (max-width: 992px) {
-    .hero-text h1 {
-        font-size: 3rem;
-    }
-    
-    .hero-content {
-        gap: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero {
-        min-height: 100svh;
-        display: flex;
-        align-items: center; /* Volta a centralizar verticalmente */
-        padding: 80px 20px; /* Padding equilibrado para centralização */
-    }
-    .hero-content {
-        flex-direction: column; 
-        text-align: center;
-        justify-content: center;
-    }
-    .hero-image { display: none; }
-    .hero-btns { justify-content: center; }
-    .hero-text h1 { font-size: 2.5rem; }
-    .logo img { height: 60px; }
-    .navbar { height: 70px; }
-    
-    .categories {
-        justify-content: flex-start;
-        overflow-x: auto; /* Permite scroll lateral no mobile */
-        flex-wrap: nowrap;
-        padding-bottom: 15px;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .product-grid {
-        grid-template-columns: 1fr; /* Força 1 coluna em telas muito pequenas para legibilidade */
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 100%;
-        height: 100%;
-        background: var(--white);
-        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        flex-direction: column;
-        padding: 0;
-        justify-content: center;
-        align-items: center;
-        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 2500;
-        display: flex;
-    }
-
-    .nav-links.active {
-        right: 0;
-    }
-
-    .nav-links a {
-        margin: 15px 0;
-        font-size: 1.5rem;
-    }
-
-    .close-menu-btn {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 2.5rem;
-    }
-
-    .mobile-menu-btn { display: block; }
-    .side-cart { width: 100%; right: -100%; }
-
-    .local-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .footer-grid {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
-    .modal-content {
-        width: 100% !important;
-        height: 100vh !important;
-        height: 100svh !important; /* Suporte para barras dinâmicas do mobile */
-        max-height: 100vh !important;
-        padding: 0 !important;
-        border-radius: 0 !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        animation: slideUpMobile 0.4s ease-out;
-    }
-
-    /* Título Fixo no Topo (Sticky Header) */
-    .modal-content h2 {
-        position: sticky;
-        top: 0;
-        background: var(--white);
-        z-index: 20;
-        padding: 25px 20px 15px;
-        margin: 0 !important;
-        border-bottom: 1px solid var(--gray);
-        font-size: 1.3rem;
-    }
-
-    .close-modal {
-        z-index: 21;
-        top: 15px;
-        right: 15px;
-    }
-
-    /* Garante padding nos elementos internos para não tocarem as bordas */
-    .modal-content > *:not(h2):not(.close-modal):not(img):not(.btn-primary:last-of-type) {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    /* Botão de Ação Fixo no Rodapé (Sticky Footer) */
-    .modal-content .btn-primary:last-of-type {
-        position: sticky;
-        bottom: 0;
-        margin: auto 0 0 0 !important; /* Empurra o botão para o rodapé */
-        width: 100% !important;
-        border-radius: 0;
-        padding: 20px;
-        z-index: 20;
-        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
-    }
-}
-
-@keyframes slideUpMobile { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-/* Classe para travar o scroll (Fix para iOS e Desktop Jump) */
-html.no-scroll,
-body.no-scroll {
-    overflow: hidden !important;
-    height: 100% !important;
-    scrollbar-gutter: stable; /* Evita o pulo do layout no desktop */
-}
-
-/* Animação Scroll */
-.scroll-reveal {
-    opacity: 1; /* Valor padrão 1 para garantir visibilidade se o JS demorar */
-    transform: translateY(30px);
-    transition: 0.8s ease-out;
-}
-
-.scroll-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Se o JS estiver rodando, aí sim ocultamos para animar */
-html.js-ready .scroll-reveal:not(.visible) {
-    opacity: 0;
-}
-
-/* Ajuste de layout quando o banner está ativo */
-body.with-banner .navbar { top: 40px; }
-body.with-banner .hero { padding-top: 180px; }
-body.with-banner .menu-section { padding-top: 160px; }
-
-@media (max-width: 768px) {
-    body.with-banner .hero { padding-top: 120px; }
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Pastel | O Rei do Sabor</title>
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>document.documentElement.classList.add('js-ready');</script><body>
+
+    <!-- Status Bar -->
+    <div id="store-status-banner" class="status-banner"></div>
+
+    <!-- Navegação -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo"><img src="./img/logo.png" alt="Casa do Pastel"></div>
+            <nav class="nav-links">
+                <button class="close-menu-btn" onclick="toggleMobileMenu()"><i data-lucide="x"></i></button>
+                <a href="#home">Início</a>
+                <a href="menu.html">Cardápio</a>
+                <a href="#local">O Local</a>
+                <a href="#avaliacoes">Avaliações</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg-animation"></div>
+        <div class="container hero-content">
+            <div class="hero-text scroll-reveal">
+                <h1>O melhor pastel da cidade na sua casa</h1>
+                <p>Delivery rápido e espaço confortável para você comer no local.</p>
+                <div class="hero-btns">
+                    <a href="menu.html" class="btn btn-primary">Ver Cardápio</a>
+                </div>
+            </div>
+            <div class="hero-image scroll-reveal">
+                <img src="./img/pastel_crocante.png" alt="Pastel Crocante" class="floating">
+            </div>
+        </div>
+        <div class="scroll-arrow scroll-reveal" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })">
+            <span class="scroll-text">Role para ver mais</span>
+            <i data-lucide="chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Cardápio Digital -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Destaques da Casa</h2>
+
+            <div id="product-grid" class="product-grid scroll-reveal">
+                <!-- Produtos inseridos via JS -->
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;" class="scroll-reveal">
+                <a href="menu.html" class="btn btn-secondary">Ver Cardápio Completo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Local -->
+    <section id="local" class="local-section">
+        <div class="container">
+            <div class="local-content">
+                <div class="local-text scroll-reveal">
+                    <h2>Venha viver a melhor experiência</h2>
+                    <p>Ambiente agradável, mesas confortáveis e o melhor pastel da região.</p>
+                    <div class="local-info">
+                        <span><i data-lucide="map-pin"></i> Rua Pablo Sales, 16 - Planalto</span>
+                        <span><i data-lucide="clock"></i> Ter a Sex: 14h às 22h30 | Sáb: 14h às 23h | Dom: 18h às 23h</span>
+                    </div>
+                </div>
+                <div class="local-gallery scroll-reveal">
+                    <img src="./img/local.png" alt="Nosso Ambiente">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section id="avaliacoes" class="reviews">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">O que nossos Clientes dizem sobre nós</h2>
+            <div class="reviews-grid scroll-reveal">
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"O pastel chega super crocante! O delivery é realmente muito rápido."</p>
+                    <strong>- Ricardo Souza</strong>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Melhor pastel de carne com queijo que já comi. Atendimento nota 10."</p>
+                    <strong>- Ana Julia</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrinho Lateral -->
+    <aside id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <h3>Seu Pedido</h3>
+            <button onclick="toggleCart()"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Itens via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="total-price">R$ 0,00</span>
+            </div>
+            <button id="finalize-button" class="btn btn-primary w-100" onclick="checkout()">Finalizar Pedido</button>
+        </div>
+    </aside>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo"><img src="./img/logo.png" alt="Casa do Pastel"></div>
+                    <p>Qualidade real em cada mordida.</p>
+                </div>
+                <div class="socials">
+                  <a href="https://www.instagram.com/casadopastel_lp/"><i data-lucide="instagram"></i></a>
+                  <a href="https://wa.link/j1grb3"><i data-lucide="message-circle"></i></a>
+                </div>
+            </div>
+            <hr>
+            <p class="copy">&copy; 2026 Casa do Pastel. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Detalhes do Produto -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div id="modal-body">
+                <!-- Conteúdo inserido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCheckoutModal()">&times;</button>
+            <h2 style="margin-bottom: 20px;">Finalizar Pedido</h2>
+            
+            <input type="text" placeholder="Seu Nome" id="client-name" style="margin-bottom: 10px;">
+            <input type="text" placeholder="Seu Telefone (WhatsApp)" id="client-phone" style="margin-bottom: 20px;">
+
+            <div class="delivery-options">
+                <label><input type="radio" name="order-type" value="delivery" checked> Delivery</label>
+                <label><input type="radio" name="order-type" value="retirada"> Retirada</label>
+            </div>
+            
+            <div id="address-section" class="address-section">
+                <div class="custom-select-container" id="neighborhood-custom-select">
+                    <div class="custom-select-trigger" onclick="toggleNeighborhoodSelect()">
+                        <span id="selected-neighborhood-text">Selecione seu bairro...</span>
+                        <i data-lucide="chevron-down" class="select-arrow"></i>
+                    </div>
+                    <div class="custom-options-container" id="neighborhood-options-list" style="display: none;"></div>
+                    <input type="hidden" id="neighborhood-value" value="0">
+                </div>
+                <input type="text" placeholder="Rua" id="addr-street">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Número" id="addr-number" style="flex: 1;">
+                    <input type="text" placeholder="Complemento" id="addr-complement" style="flex: 2;">
+                </div>
+                <p>Taxa de entrega: <span id="delivery-fee">R$ 0,00</span></p>
+            </div>
+            
+            <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Forma de Pagamento</h3>
+            <div class="payment-options">
+                <label><input type="radio" name="payment-method" value="pix" checked> Pix</label>
+                <label><input type="radio" name="payment-method" value="cartao"> Cartão</label>
+                <label><input type="radio" name="payment-method" value="dinheiro"> Dinheiro</label>
+            </div>
+
+            <div id="change-section" style="display: none; margin-bottom: 20px;">
+                <input type="text" placeholder="Troco para quanto?" id="change-input">
+            </div>
+            
+            <div class="cart-total" style="border-top: 1px solid var(--gray); padding-top: 15px; margin-bottom: 20px;">
+                <span>Total do Pedido:</span>
+                <span id="checkout-total-price">R$ 0,00</span>
+            </div>
+            
+            <p id="estimated-time" style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 10px;">Tempo médio de entrega: 30-50 min</p>
+            <button class="btn btn-primary w-100" onclick="sendOrder()">Confirmar e Enviar para WhatsApp</button>
+            <p class="status-sim" id="status-msg-checkout" style="text-align: center; margin-top: 15px;"></p>
+        </div>
+    </div>
+
+    <!-- Modal Upsell Bebidas -->
+    <div id="upsell-modal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <button class="close-modal" onclick="closeUpsellModal()">&times;</button>
+            <div style="margin-bottom: 20px;">
+                <i data-lucide="cup-soda" style="width: 60px; height: 60px; color: var(--primary); margin: 0 auto;"></i>
+            </div>
+            <h2 style="margin-bottom: 10px;">Gostaria de adicionar uma bebida?</h2>
+            <p style="margin-bottom: 30px; opacity: 0.8;">Um pastel crocante pede um refrigerante ou um suco bem gelado!</p>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeUpsellAndCheckout()">Não, obrigado</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="goToDrinks()">Ver Bebidas</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
