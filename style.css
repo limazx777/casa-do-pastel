@@ -647,6 +647,11 @@ img {
     animation: slideUp 0.2s ease-out;
 }
 
+/* Estilo para garantir que o mapa não quebre o modal */
+#map-modal .modal-content {
+    overflow: visible;
+}
+
 .custom-option {
     display: flex;
     flex-direction: column;
@@ -680,7 +685,7 @@ img {
     font-weight: 700;
 }
 
-textarea, input[type="text"], input[type="tel"] {
+textarea, input[type="text"] {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
@@ -853,19 +858,55 @@ textarea, input[type="text"], input[type="tel"] {
     }
 
     .modal-content {
-        width: 100%;
-        padding: 20px;
-        border-radius: 20px 20px 0 0;
+        width: 100% !important;
+        height: 100vh !important;
+        height: 100svh !important; /* Suporte para barras dinâmicas do mobile */
+        max-height: 100vh !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
         position: fixed;
-        bottom: 0;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
         animation: slideUpMobile 0.4s ease-out;
     }
 
-    /* Previne o zoom automático indesejado no iOS Safari ao focar nos campos */
-    textarea, 
-    input[type="text"], 
-    input[type="tel"] {
-        font-size: 16px;
+    /* Título Fixo no Topo (Sticky Header) */
+    .modal-content h2 {
+        position: sticky;
+        top: 0;
+        background: var(--white);
+        z-index: 20;
+        padding: 25px 20px 15px;
+        margin: 0 !important;
+        border-bottom: 1px solid var(--gray);
+        font-size: 1.3rem;
+    }
+
+    .close-modal {
+        z-index: 21;
+        top: 15px;
+        right: 15px;
+    }
+
+    /* Garante padding nos elementos internos para não tocarem as bordas */
+    .modal-content > *:not(h2):not(.close-modal):not(img):not(.btn-primary:last-of-type) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Botão de Ação Fixo no Rodapé (Sticky Footer) */
+    .modal-content .btn-primary:last-of-type {
+        position: sticky;
+        bottom: 0;
+        margin: auto 0 0 0 !important; /* Empurra o botão para o rodapé */
+        width: 100% !important;
+        border-radius: 0;
+        padding: 20px;
+        z-index: 20;
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
     }
 }
 
