@@ -355,7 +355,47 @@ img {
 
 .cart-footer { border-top: 1px solid var(--gray); padding-top: 20px; }
 
-.delivery-options { margin-bottom: 15px; }
+/* Estilização Customizada de Opções (Radio Cards) */
+.delivery-options, 
+.payment-options {
+    display: flex;
+    flex-direction: column; /* Lista um embaixo do outro */
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.delivery-options label, 
+.payment-options label {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: #ffffff;
+    border: 2px solid #f0f0f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    color: var(--dark);
+    position: relative;
+    user-select: none;
+}
+
+.delivery-options input[type="radio"],
+.payment-options input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: none; /* Esconde o input nativo */
+}
+
+/* Estado Selecionado: Card com borda vermelha e fundo sutil */
+.delivery-options label:has(input:checked),
+.payment-options label:has(input:checked) {
+    border-color: #e3262e;
+    background-color: rgba(227, 38, 46, 0.05);
+    color: #e3262e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 38, 46, 0.1);
+}
 
 /* Seção Local */
 .local-section {
