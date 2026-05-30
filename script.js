@@ -831,23 +831,46 @@ async function sendOrder() {
     if (orderType === 'delivery') message += `Taxa de Entrega: R$ ${feeValue.toFixed(2)}\n`;
     message += `💵 *TOTAL: ${total}*`;
 
-    // Codifica a mensagem para URL
+    // Codifica a mensagem para URL usando o formato oficial e seguro
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
-    statusMsg.innerText = "🚀 Redirecionando para o WhatsApp...";
+    // --- Tela de Contingência (Infalível) ---
+    // Substitui o formulário de checkout por uma mensagem de sucesso e o botão de ação manual
+    const modalContent = document.querySelector('#checkout-modal .modal-content');
+    if (modalContent) {
+        modalContent.innerHTML = `
+            <div style="text-align: center; padding: 10px 0;">
+                <div style="margin-bottom: 20px;">
+                    <i data-lucide="check-circle" style="width: 64px; height: 64px; color: #27ae60; margin: 0 auto;"></i>
+                </div>
+                <h2 style="margin-bottom: 10px;">Pedido Confirmado!</h2>
+                <p style="margin-bottom: 20px; color: #666;">Seu pedido foi registrado com sucesso em nosso sistema.</p>
+                
+                <div style="background: #fdf2f2; border: 2px solid var(--primary); padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                    <p style="font-size: 0.95rem; color: var(--dark); font-weight: 600; margin-bottom: 15px;">
+                        ⚠️ AÇÃO NECESSÁRIA <br> Clique no botão abaixo para enviar o pedido via WhatsApp.
+                    </p>
+                    <a href="${whatsappUrl}" class="btn btn-primary w-100" style="background: #25D366; border: none; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; padding: 18px;">
+                         👉 ENVIAR NO WHATSAPP
+                    </a>
+                </div>
 
+                <p style="font-size: 0.85rem; color: #888;">Tentando redirecionamento automático...</p>
+                <button class="btn btn-secondary w-100" style="margin-top: 15px;" onclick="location.reload()">Voltar ao início</button>
+            </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+    }
+
+    // Limpa o carrinho na memória e atualiza a UI (que também limpa o localStorage)
+    cart = [];
+    updateCartUI();
+
+    // Redirecionamento automático na mesma aba para evitar bloqueio de pop-up
     setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
-        statusMsg.innerText = "✅ Pedido enviado!";
-
-        // Limpa o carrinho na memória e atualiza a UI (que também limpa o localStorage)
-        cart = [];
-        updateCartUI();
-
-        // Fecha o modal de checkout após um curto intervalo para o usuário ver a confirmação
-        setTimeout(closeCheckoutModal, 2000);
-    }, 1000);
+        window.location.href = whatsappUrl;
+    }, 800);
 }
 
 // --- Funções Custom Select ---
