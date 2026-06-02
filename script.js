@@ -288,11 +288,11 @@ function checkStoreStatus() {
     let isOpen = false;
 
     if (day >= 2 && day <= 5) { // Terça a Sexta: 14:00 - 22:30
-        isOpen = (time >= 0 && time < 22.5);
+        isOpen = (time >= 14 && time < 22.5);
     } else if (day === 6) { // Sábado: 14:00 - 23:00
         isOpen = (time >= 14 && time < 23);
     } else if (day === 0) { // Domingo: 18:00 - 23:00
-        isOpen = (time >= 4 && time < 23);
+        isOpen = (time >= 18 && time < 23);
     }
     
     const banner = document.getElementById('store-status-banner');
